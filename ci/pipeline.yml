@@ -60,9 +60,22 @@ jobs:
 - name: deploy-review
   plan:
   - get: pal-tracker
+    passed: [build]
   - get: pal-tracker-artifacts
     trigger: true
     passed: [build]
+  - task: migrate database
+    file: pal-tracker/ci/migrateDatabase.yml
+    params:
+      CF_API_URL: https://api.sys.evans.pal.pivotal.io
+      CF_USERNAME: srinivasavaradhan_agaramchakravarthy@syntelinc.com
+      CF_PASSWORD: vq5wspce
+      CF_ORG: srinivas-agaram-chakkaravarthy
+      CF_SPACE: review
+      MYSQL_IP: 10.0.8.18
+      DATABASE_NAME: cf_eb98a32c_905e_451f_a0e5_64288d9813a5
+      DATABASE_USERNAME: wQaXfpCwXPAujvGv
+      DATABASE_PASSWORD: 5HL3Oy4H4HqasmNQ
   - put: review-deployment
     params:
       manifest: pal-tracker/manifest-review.yml
@@ -73,8 +86,21 @@ jobs:
 - name: deploy-production
   plan:
   - get: pal-tracker
+    passed: [deploy-review]
   - get: pal-tracker-artifacts
     passed: [deploy-review]
+  - task: migrate database
+    file: pal-tracker/ci/migrateDatabase.yml
+    params:
+      CF_API_URL: https://api.sys.evans.pal.pivotal.io
+      CF_USERNAME: srinivasavaradhan_agaramchakravarthy@syntelinc.com
+      CF_PASSWORD: vq5wspce
+      CF_ORG: srinivas-agaram-chakkaravarthy
+      CF_SPACE: review
+      MYSQL_IP: 10.0.8.18
+      DATABASE_NAME: cf_a4e5a2ba_c3f0_4bc5_9bc0_6c2562c71945
+      DATABASE_USERNAME: Wk4Psweq3UgxxvBO
+      DATABASE_PASSWORD: dqGZVY2SmhVgYzb7
   - put: production-deployment
     params:
       manifest: pal-tracker/manifest-production.yml
