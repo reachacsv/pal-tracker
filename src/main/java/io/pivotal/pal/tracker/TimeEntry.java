@@ -20,7 +20,6 @@ public class TimeEntry {
     }
 
     public TimeEntry(long projectId, long userId, LocalDate date, int hours) {
-        //this.id = repo.getMaxId() + 1; //default to 1
         this.projectId = projectId;
         this.userId = userId;
         this.date = date;
