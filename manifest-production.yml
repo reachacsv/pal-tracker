@@ -1,4 +1,4 @@
 applications:
 - name: pal-tracker
   path: build/libs/pal-tracker.jar
-  host: aakhi-srini-pal-tracker
+  host: gaurav-srini-pal-tracker
